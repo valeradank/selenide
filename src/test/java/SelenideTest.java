@@ -3,6 +3,9 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Keys;
 
 
+import java.time.Duration;
+
+import static com.codeborne.selenide.Condition.appear;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
 
@@ -25,6 +28,6 @@ public class SelenideTest {
     $("input[name='phone']").setValue("+79295964548");
     $("[data-test-id='agreement']").click();
     $x("//span[text()='Забронировать']").click();
-    $("[data-test-id='notification']").shouldBe(visible);
+    $("div[data-test-id='notification']").should(appear, Duration.ofSeconds(15));
 }
 }
