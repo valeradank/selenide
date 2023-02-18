@@ -3,7 +3,7 @@ import java.time.format.DateTimeFormatter;
 
 public class SelenideGenerateDate {
     public String generateDate(int days) {
-        return LocalDate.now().plusDays(days).format(DateTimeFormatter.ofPattern("18.MM.yyyy"));
+        return LocalDate.now().plusDays(days).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
 
 
     }
