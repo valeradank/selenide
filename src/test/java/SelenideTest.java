@@ -1,59 +1,37 @@
 import com.codeborne.selenide.Configuration;
-import io.github.bonigarcia.wdm.WebDriverManager;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
+
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 
 
 import java.time.Duration;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import static com.codeborne.selenide.Condition.appear;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
 
 public class SelenideTest {
-    WebDriver driver;
+    String generateDate = new SelenideGenerateDate() {
 
-    @BeforeAll
-    static void setupClass() {
-        WebDriverManager.chromedriver().setup();
-    }
-
-    @BeforeEach
-    void setupTest() {
-        driver = new ChromeDriver();
-    }
-
-    @AfterEach
-    void teardown() {
-        driver.quit();
-
-
-    }
+        String planningDate = generateDate(4);
+    }.toString();
 
 
     @Test
-    void cardDeliveryTest() {
+    public void cardDeliveryTest() {
         Configuration.holdBrowserOpen = true;
         open("http://localhost:9999/");
         $("input[type='text']").setValue("Астрахань");
-        $("input[type='tel']").sendKeys(Keys.BACK_SPACE);
-        $("input[type='tel']").sendKeys(Keys.BACK_SPACE);
-        $("input[type='tel']").sendKeys(Keys.BACK_SPACE);
-        $("input[type='tel']").sendKeys(Keys.BACK_SPACE);
-        $("input[type='tel']").sendKeys(Keys.BACK_SPACE);
-        $("input[type='tel']").sendKeys(Keys.BACK_SPACE);
-        $("input[type='tel']").sendKeys(Keys.BACK_SPACE);
-        $("input[type='tel']").sendKeys(Keys.BACK_SPACE);
-        $("input[type='tel']").setValue("22.02.2023");
+        $("[data-test-id='date'] input").sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.BACK_SPACE);
+        $("input[type='tel']").setValue(generateDate);
         $("input[name='name']").setValue("Валерий Данковцев");
         $("input[name='phone']").setValue("+79295964548");
         $("[data-test-id='agreement']").click();
         $x("//span[text()='Забронировать']").click();
         $("div[data-test-id='notification']").should(appear, Duration.ofSeconds(15));
     }
+
+
 }
