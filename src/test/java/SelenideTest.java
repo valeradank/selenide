@@ -14,8 +14,8 @@ import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
 
 public class SelenideTest {
-    String generateDate = new SelenideGenerateDate() {
 
+    String generateDate = new SelenideGenerateDate() {
         LocalDate date = LocalDate.now();
         String planningDate = generateDate(4);
     }.planningDate;
@@ -41,8 +41,7 @@ public class SelenideTest {
     }
 
 
-
-    }
+}
 
 
 
